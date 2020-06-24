@@ -13,7 +13,6 @@ class AccountHandler(private val accountAppService: AccountAppService) {
     fun account(req: ServerRequest): Mono<ServerResponse> {
         val accounts = accountAppService.findAll()
 
-
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
