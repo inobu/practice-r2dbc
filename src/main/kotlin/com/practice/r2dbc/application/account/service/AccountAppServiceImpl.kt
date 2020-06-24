@@ -1,18 +1,13 @@
 package com.practice.r2dbc.application.account.service
 
 import com.practice.r2dbc.application.account.model.Account
+import com.practice.r2dbc.infrastracture.repository.AccountRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-class AccountAppServiceImpl() : AccountAppService {
+class AccountAppServiceImpl(private val accountRepository: AccountRepository) : AccountAppService {
     override fun findAll(): Flux<Account> {
-        val account = Account(1, "Tainou")
-
-//        return listOf(account)
-//
-        return Flux.just(
-                account
-        )
+        return accountRepository.findAll().map { Account(it.id, it.name) }
     }
 }

@@ -13,7 +13,7 @@ class R2dbcApplicationTests {
 	@Test
 	fun contextLoads() {
 		val a = accountAppService.findAll()
-		println(a)
+		println(a.blockFirst())
 	}
 
 }
