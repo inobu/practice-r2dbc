@@ -4,9 +4,7 @@ import com.practice.r2dbc.application.account.handler.AccountHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.router
+import org.springframework.web.reactive.function.server.*
 
 @Component
 class Router(
@@ -17,11 +15,9 @@ class Router(
     }
 
     @Bean
-    fun route(): RouterFunction<ServerResponse> {
-        return router {
-            accept(MediaType.APPLICATION_JSON).nest {
-                GET(PATH, accountHandler::account)
-            }
+    fun route(): RouterFunction<ServerResponse> = router {
+        accept(MediaType.APPLICATION_JSON).nest{
+            GET(PATH, accountHandler::account)
         }
     }
 }
