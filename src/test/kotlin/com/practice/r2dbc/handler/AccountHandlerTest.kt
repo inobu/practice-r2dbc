@@ -1,6 +1,6 @@
 package com.practice.r2dbc.handler
 
-import com.practice.r2dbc.application.account.model.Account
+import com.practice.r2dbc.presentation.account.model.Account
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired

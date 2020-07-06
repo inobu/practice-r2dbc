@@ -1,4 +1,4 @@
-package com.practice.r2dbc.application.account.model
+package com.practice.r2dbc.presentation.account.model
 
 
 data class Account(

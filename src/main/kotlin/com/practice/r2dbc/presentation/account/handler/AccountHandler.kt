@@ -1,6 +1,6 @@
-package com.practice.r2dbc.application.account.handler
+package com.practice.r2dbc.presentation.account.handler
 
-import com.practice.r2dbc.application.account.model.Account
+import com.practice.r2dbc.presentation.account.model.Account
 import com.practice.r2dbc.application.account.service.AccountAppService
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component

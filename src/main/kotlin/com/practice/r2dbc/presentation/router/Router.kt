@@ -1,6 +1,6 @@
-package com.practice.r2dbc.application.router
+package com.practice.r2dbc.presentation.router
 
-import com.practice.r2dbc.application.account.handler.AccountHandler
+import com.practice.r2dbc.presentation.account.handler.AccountHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
