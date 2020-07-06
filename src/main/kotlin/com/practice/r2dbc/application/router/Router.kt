@@ -2,11 +2,13 @@ package com.practice.r2dbc.application.router
 
 import com.practice.r2dbc.application.account.handler.AccountHandler
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
-import org.springframework.stereotype.Component
+import org.springframework.web.reactive.config.EnableWebFlux
 import org.springframework.web.reactive.function.server.*
 
-@Component
+@EnableWebFlux
+@Configuration
 class Router(
         private val accountHandler: AccountHandler
 ) {
