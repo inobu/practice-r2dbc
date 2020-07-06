@@ -1,6 +1,5 @@
 package com.practice.r2dbc.security
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.practice.r2dbc.security.basic.BasicAuthenticationSuccessHandler
 import com.practice.r2dbc.security.bearer.BearerTokenReactiveAuthenticationManager
 import com.practice.r2dbc.security.bearer.ServerHttpBearerAuthenticationConverter
@@ -29,16 +28,13 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint
 import org.springframework.security.web.server.WebFilterExchange
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler
-import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository
-import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyExtractor
 import org.springframework.web.reactive.function.BodyExtractors
 import org.springframework.web.server.ServerWebExchange
-import org.springframework.web.server.WebFilter
 import reactor.core.publisher.Mono
 import java.util.*
 import java.util.function.Function
@@ -63,11 +59,18 @@ class WebFluxSecurityConfig {
         val authenticationFilter = authenticationWebFilter(
                 authenticationManager,
                 serverCodecConfigurer,
-                ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/login")
+                ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/login", "/registration")
+        )
+
+        val authorizeWebFilter = authorizeWebFilter(
+                authenticationManager,
+                serverCodecConfigurer,
+                ServerWebExchangeMatchers.pathMatchers("/accounts")
         )
 
         http.addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-
+        http.addFilterAt(authorizeWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .authorizeExchange().pathMatchers("/accounts").authenticated()
 
         return http.build()
     }
@@ -108,6 +111,25 @@ class WebFluxSecurityConfig {
             setAuthenticationFailureHandler(FailureHandler())
             // セキュリティコンテキストの保存方法
             setSecurityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+        }
+    }
+
+    fun authorizeWebFilter(
+            authenticationManager: ReactiveAuthenticationManager,
+            serverCodecConfigurer: ServerCodecConfigurer,
+            authorizePath: ServerWebExchangeMatcher
+    ): AuthenticationWebFilter? {
+        val a = BearerTokenReactiveAuthenticationManager()
+        return AuthenticationWebFilter(a).apply {
+            // 認可処理を行うリクエスト
+            setRequiresAuthenticationMatcher(authorizePath)
+            // 認証処理における認証情報を抽出方法
+            setServerAuthenticationConverter(ServerHttpBearerAuthenticationConverter())
+//            // 認証成功/失敗時の処理
+//            setAuthenticationSuccessHandler(BasicAuthenticationSuccessHandler())
+            setAuthenticationFailureHandler(FailureHandler())
+//            // セキュリティコンテキストの保存方法
+//            setSecurityContextRepository(NoOpServerSecurityContextRepository.getInstance())
         }
     }
 
@@ -159,11 +181,10 @@ class WebFluxSecurityConfig {
 
     // 認証リクエスト本文の JSON
     data class AuthenticationInfo(
-            @JsonProperty("username")
-            val userName: String,
+            val loginId: String,
             val password: String
     ) {
-        fun toToken() = UsernamePasswordAuthenticationToken(userName, password)
+        fun toToken() = UsernamePasswordAuthenticationToken(loginId, password)
     }
 
 }

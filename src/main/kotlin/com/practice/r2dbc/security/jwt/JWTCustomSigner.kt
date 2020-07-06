@@ -14,10 +14,10 @@ class JWTCustomSigner {
     var signer: JWSSigner? = null
 
     init {
-        try {
-            signer = MACSigner(JWTSecrets.DEFAULT_SECRET)
+        signer = try {
+            MACSigner(JWTSecrets.DEFAULT_SECRET)
         } catch (e: KeyLengthException) {
-            signer = null
+            null
         }
     }
 }
