@@ -3,3 +3,9 @@ spring:
     url: r2dbc:mysql://localhost:3340/r2dbc
     username: root
     password: secret
+
+#  webflux:
+#    base-path: /r2dbc
+
+server:
+  port: 8081

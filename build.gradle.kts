@@ -26,11 +26,16 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	implementation("org.springframework.boot:spring-boot-starter-webflux:2.3.1.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-security:2.3.1.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("io.jsonwebtoken:jjwt:0.9.0")
+	implementation("com.nimbusds:nimbus-jose-jwt:6.4.2")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("dev.miku:r2dbc-mysql")
 	runtimeOnly("mysql:mysql-connector-java")
@@ -38,6 +43,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
+	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("io.projectreactor:reactor-test")
 }
 
