@@ -59,7 +59,7 @@ class WebFluxSecurityConfig {
         val authenticationFilter = authenticationWebFilter(
                 authenticationManager,
                 serverCodecConfigurer,
-                ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/login", "/registration")
+                ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/login")
         )
 
         val authorizeWebFilter = authorizeWebFilter(
@@ -68,7 +68,8 @@ class WebFluxSecurityConfig {
                 ServerWebExchangeMatchers.pathMatchers("/accounts")
         )
 
-        http.addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+        http.addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION).
+                authorizeExchange().pathMatchers("/registration").permitAll()
         http.addFilterAt(authorizeWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .authorizeExchange().pathMatchers("/accounts").authenticated()
 
@@ -80,19 +81,19 @@ class WebFluxSecurityConfig {
         return BCryptPasswordEncoder()
     }
 
-    /**
-     * インメモリでユーザー情報を保持する場合の設定
-     */
-    @Bean
-    fun userDetailsRepository(passwordEncoder: PasswordEncoder): MapReactiveUserDetailsService? {
-        val user = User.withUsername("user")
-                .passwordEncoder(passwordEncoder::encode)
-                .password("password")
-                .roles("USER")
-                .build()
-
-        return MapReactiveUserDetailsService(user)
-    }
+//    /**
+//     * インメモリでユーザー情報を保持する場合の設定
+//     */
+//    @Bean
+//    fun userDetailsRepository(passwordEncoder: PasswordEncoder): MapReactiveUserDetailsService? {
+//        val user = User.withUsername("user")
+//                .passwordEncoder(passwordEncoder::encode)
+//                .password("password")
+//                .roles("USER")
+//                .build()
+//
+//        return MapReactiveUserDetailsService(user)
+//    }
 
     // @Bean は付けない (WebFilter が 2 重で登録されてしまう)
     fun authenticationWebFilter(

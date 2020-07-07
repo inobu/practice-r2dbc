@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table
 class Account(
         @Id
         @Column("id")
-        val id: Long,
+        val id: Long = 0,
 
         @Column("name")
         val name: String,

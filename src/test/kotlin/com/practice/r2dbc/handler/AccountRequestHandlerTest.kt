@@ -1,6 +1,6 @@
 package com.practice.r2dbc.handler
 
-import com.practice.r2dbc.presentation.account.model.Account
+import com.practice.r2dbc.presentation.account.model.AccountRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @ExtendWith(SpringExtension::class)
 @AutoConfigureWebTestClient
 @SpringBootTest
-class AccountHandlerTest {
+class AccountRequestHandlerTest {
 
     @Autowired
     lateinit var webTestClient : WebTestClient
@@ -29,7 +29,7 @@ class AccountHandlerTest {
                 .exchange()
                 .expectStatus().isOk
                 .expectHeader().contentType(MediaType.APPLICATION_JSON_VALUE)
-                .expectBodyList(Account::class.java).contains()
+                .expectBodyList(AccountRequest::class.java)
 
     }
 }
