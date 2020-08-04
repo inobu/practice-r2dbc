@@ -24,22 +24,52 @@ repositories {
 }
 
 dependencies {
+	/**
+	 * Spring
+	 */
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	implementation("org.springframework.boot:spring-boot-starter-webflux:2.3.1.RELEASE")
 	implementation("org.springframework.boot:spring-boot-starter-security:2.3.1.RELEASE")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.3.1.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-mail:2.3.1.RELEASE")
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE")
+
+	/**
+	 * Jackson
+	 */
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+	/**
+	 * Kotlin
+	 */
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+	/**
+	 * JWT
+	 */
 	implementation("io.jsonwebtoken:jjwt:0.9.0")
 	implementation("com.nimbusds:nimbus-jose-jwt:6.4.2")
 
+	/**
+	 * AWS
+	 */
+	implementation("com.amazonaws:aws-java-sdk:1.11.826")
+
+	implementation("javax.activation:activation:1.1.1")
+	implementation("org.freemarker:freemarker")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	/**
+	 * mysql
+	 */
 	runtimeOnly("dev.miku:r2dbc-mysql")
 	runtimeOnly("mysql:mysql-connector-java")
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.3.1.RELEASE")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}

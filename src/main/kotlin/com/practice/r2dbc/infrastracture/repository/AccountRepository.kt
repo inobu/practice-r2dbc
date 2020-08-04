@@ -1,6 +1,7 @@
 package com.practice.r2dbc.infrastracture.repository
 
 import com.practice.r2dbc.infrastracture.model.Account
+import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Mono
 
