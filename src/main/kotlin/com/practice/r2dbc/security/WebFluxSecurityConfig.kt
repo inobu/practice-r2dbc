@@ -3,7 +3,6 @@ package com.practice.r2dbc.security
 import com.practice.r2dbc.security.basic.BasicAuthenticationSuccessHandler
 import com.practice.r2dbc.security.bearer.BearerTokenReactiveAuthenticationManager
 import com.practice.r2dbc.security.bearer.ServerHttpBearerAuthenticationConverter
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -18,9 +17,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.server.SecurityWebFilterChain
@@ -44,9 +41,6 @@ import java.util.function.Function
 @Configuration
 @EnableWebFluxSecurity
 class WebFluxSecurityConfig {
-    @Autowired
-    lateinit var userDetailsService: ReactiveUserDetailsService
-
     @Bean
     fun springSecurityFilterChain(http: ServerHttpSecurity,
                                   authenticationManager: ReactiveAuthenticationManager,
@@ -63,8 +57,6 @@ class WebFluxSecurityConfig {
         )
 
         val authorizeWebFilter = authorizeWebFilter(
-                authenticationManager,
-                serverCodecConfigurer,
                 ServerWebExchangeMatchers.pathMatchers("/accounts")
         )
 
@@ -81,19 +73,6 @@ class WebFluxSecurityConfig {
         return BCryptPasswordEncoder()
     }
 
-//    /**
-//     * インメモリでユーザー情報を保持する場合の設定
-//     */
-//    @Bean
-//    fun userDetailsRepository(passwordEncoder: PasswordEncoder): MapReactiveUserDetailsService? {
-//        val user = User.withUsername("user")
-//                .passwordEncoder(passwordEncoder::encode)
-//                .password("password")
-//                .roles("USER")
-//                .build()
-//
-//        return MapReactiveUserDetailsService(user)
-//    }
 
     // @Bean は付けない (WebFilter が 2 重で登録されてしまう)
     fun authenticationWebFilter(
@@ -116,12 +95,9 @@ class WebFluxSecurityConfig {
     }
 
     fun authorizeWebFilter(
-            authenticationManager: ReactiveAuthenticationManager,
-            serverCodecConfigurer: ServerCodecConfigurer,
             authorizePath: ServerWebExchangeMatcher
     ): AuthenticationWebFilter? {
-        val a = BearerTokenReactiveAuthenticationManager()
-        return AuthenticationWebFilter(a).apply {
+        return AuthenticationWebFilter(BearerTokenReactiveAuthenticationManager()).apply {
             // 認可処理を行うリクエスト
             setRequiresAuthenticationMatcher(authorizePath)
             // 認証処理における認証情報を抽出方法
