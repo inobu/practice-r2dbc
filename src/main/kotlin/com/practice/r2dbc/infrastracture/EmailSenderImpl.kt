@@ -25,7 +25,7 @@ class EmailSenderImpl(private val mailSender: MailSender) : EmailSender {
 //            setDirectoryForTemplateLoading(File("src/main/resources/template"))
 //        }
 //
-//        cfg.getTemplate("init_mail.ftl")
+//        cfg.getTemplate("signup.ftl")
 
 
     }

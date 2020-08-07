@@ -11,17 +11,22 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils
 @Component
 class RegistrationEmailFactoryImpl(private val configuration: Configuration) : RegistrationEmailFactory {
     override fun createEmail(user: User): Email {
+        val templateText = getText("signup.ftl")
+        val first = templateText.indexOf("\n")
+        val subject = templateText.substring(0 until first)
+        val text = templateText.substring(first)
 
         return Email.of(
                 from = MailAddress.of("test@inobu.dev"),
                 to = user.mailAddress,
-                subject = "あ",
-                text = "本文"
+                subject = subject,
+                text = text
         )
     }
 
-    private fun getText(templateName: String, model: Any): String {
+
+    fun getText(templateName: String, model: Any? = null): String {
         val template = configuration.getTemplate(templateName)
-        return FreeMarkerTemplateUtils.processTemplateIntoString(template, model)
+        return model?.let { FreeMarkerTemplateUtils.processTemplateIntoString(template, it) } ?: template.toString()
     }
 }

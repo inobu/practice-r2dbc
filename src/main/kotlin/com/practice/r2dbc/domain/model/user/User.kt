@@ -8,4 +8,9 @@ class User private constructor(
         val password: Password,
         val mailAddress: MailAddress
 ) {
+    companion object {
+        fun of(userId: UserId, userName: UserName, password: Password, mailAddress: MailAddress): User {
+            return User(userId, userName, password, mailAddress)
+        }
+    }
 }
