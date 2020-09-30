@@ -10,13 +10,13 @@ plugins {
 group = "com.practice"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
+val arrowVersion = "0.10.5"
 
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
 }
-
 repositories {
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/milestone") }
@@ -46,6 +46,20 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+
+	implementation("io.arrow-kt:arrow-core:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-core-data:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-mtl-data:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-mtl:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-optics-mtl:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-recursion-data:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-recursion:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-free-data:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-free:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-annotations:${arrowVersion}")
+	implementation("io.arrow-kt:arrow-syntax:${arrowVersion}")
+	implementation("io.arrow-kt:gradle-plugin:${arrowVersion}")
 
 	/**
 	 * JWT
