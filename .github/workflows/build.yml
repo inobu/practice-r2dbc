@@ -12,12 +12,12 @@ jobs:
           uses: actions/setup-java@v1
           with:
             java-version: 11
-        - name: Use Cache Jar
-          uses: actions/cache@v2
-          with:
-            path: out
-            key: ${{ runner.os }}-a
-            restore-keys: |
-              ${{ runner.os }}-a
+#        - name: Use Cache Jar
+#          uses: actions/cache@v2
+#          with:
+#            path: out
+#            key: ${{ runner.os }}-a
+#            restore-keys: |
+#              ${{ runner.os }}-a
         - name: build
           run: ./gradlew build -x test
