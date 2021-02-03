@@ -21,12 +21,5 @@ jobs:
             key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
             restore-keys: |
               ${{ runner.os }}-gradle-
-        - name: Cache Build Jar
-          uses: actions/cache@v2
-          with:
-            path: build/libs
-            key: ${{ runner.os }}-a
-            restore-keys: |
-              ${{ runner.os }}-a
         - name: build
           run: ./gradlew build -x test
