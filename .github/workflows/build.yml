@@ -21,3 +21,5 @@ jobs:
 #              ${{ runner.os }}-a
         - name: build
           run: ./gradlew build -x test
+        - name: nothing
+          run: ls -la
