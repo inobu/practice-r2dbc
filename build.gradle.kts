@@ -59,7 +59,6 @@ dependencies {
 	implementation("io.arrow-kt:arrow-free:${arrowVersion}")
 	implementation("io.arrow-kt:arrow-annotations:${arrowVersion}")
 	implementation("io.arrow-kt:arrow-syntax:${arrowVersion}")
-	implementation("io.arrow-kt:gradle-plugin:${arrowVersion}")
 
 	/**
 	 * JWT
