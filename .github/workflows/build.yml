@@ -15,7 +15,7 @@ jobs:
         - name: Use Cache Jar
           uses: actions/cache@v2
           with:
-            path: build/libs
+            path: out
             key: ${{ runner.os }}-a
             restore-keys: |
               ${{ runner.os }}-a
