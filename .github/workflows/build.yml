@@ -23,11 +23,5 @@ jobs:
             key: ${{ runner.os }}-a
             restore-keys: |
               ${{ runner.os }}-a
-        - name: Create Cache Jar
-          uses: actions/cache@v2
-          with:
-            path: build/libs
-            restore-keys: |
-              ${{ runner.os }}-a-
         - name: build
           run: ./gradlew build -x test
