@@ -20,6 +20,6 @@ jobs:
 #            restore-keys: |
 #              ${{ runner.os }}-a
         - name: build
-          run: ./gradlew build -x test
+          run: ./gradlew jibDockerBuild -x check
         - name: nothing
           run: ls -la
